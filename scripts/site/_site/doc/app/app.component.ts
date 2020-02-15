@@ -1,8 +1,11 @@
 import { Platform } from '@angular/cdk/platform';
-import { AfterViewInit, Component, ElementRef, HostListener, NgZone, OnInit, ViewChild } from '@angular/core';
-import { Title } from '@angular/platform-browser';
+import { DOCUMENT } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, HostListener, Inject, NgZone, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Meta, Title } from '@angular/platform-browser';
 import { NavigationEnd, Router } from '@angular/router';
-import { en_US, zh_CN, NzI18nService, NzMessageService, VERSION } from 'ng-zorro-antd';
+import { en_US, NzI18nService, zh_CN } from 'ng-zorro-antd/i18n';
+import { NzMessageService } from 'ng-zorro-antd/message';
+import { VERSION } from 'ng-zorro-antd/version';
 import { fromEvent } from 'rxjs';
 import { debounceTime, map, startWith } from 'rxjs/operators';
 import { environment } from '../environments/environment';
@@ -20,7 +23,7 @@ interface DocPageMeta {
 }
 
 @Component({
-  selector   : 'app-root',
+  selector: 'app-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit, AfterViewInit {
@@ -45,7 +48,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   language = 'zh';
-  oldVersionList = [ '0.5.x', '0.6.x', '0.7.x', '1.8.x', '7.5.x' ];
+  oldVersionList = ['0.5.x', '0.6.x', '0.7.x', '1.8.x', '7.5.x'];
   currentVersion = VERSION.full;
 
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef<HTMLInputElement>;
@@ -64,9 +67,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     private nzI18nService: NzI18nService,
     private msg: NzMessageService,
     private ngZone: NgZone,
-    private platform: Platform
-  ) {
-  }
+    private platform: Platform,
+    private meta: Meta,
+    private renderer: Renderer2,
+    // tslint:disable-next-line:no-any
+    @Inject(DOCUMENT) private document: any
+  ) {}
 
   navigateToPage(url: string): void {
     if (url) {
@@ -97,7 +103,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.routerList.components.forEach(group => {
-      this.componentList = this.componentList.concat([ ...group.children ]);
+      this.componentList = this.componentList.concat([...group.children]);
     });
 
     this.router.events.subscribe(event => {
@@ -118,14 +124,14 @@ export class AppComponent implements OnInit, AfterViewInit {
         }
         this.isExperimental = this.router.url.search('experimental') !== -1;
         this.language = this.router.url
-          .split('/')[this.router.url.split('/').length - 1]
-          .split('#')[0]
+          .split('/')
+          [this.router.url.split('/').length - 1].split('#')[0]
           .split('?')[0];
         this.appService.language$.next(this.language);
         this.nzI18nService.setLocale(this.language === 'en' ? en_US : zh_CN);
-
+        this.updateDocMetaAndLocale();
         if (this.docsearch) {
-          this.docsearch!.algoliaOptions = { hitsPerPage: 5, facetFilters: [ `tags:${this.language}` ] };
+          this.docsearch!.algoliaOptions = { hitsPerPage: 5, facetFilters: [`tags:${this.language}`] };
         }
 
         if (environment.production && this.platform.isBrowser) {
@@ -155,14 +161,42 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.addWindowWidthListener();
   }
 
+  updateDocMetaAndLocale(): void {
+    if (this.platform.isBrowser) {
+      const isEn = this.language === 'en';
+      const enDescription =
+        'An enterprise-class UI design language and Angular-based implementation with a set of high-quality Angular components, one of best Angular UI library for enterprises';
+      const zhDescription = 'Ant Design 的 Angular 实现，开发和服务于企业级后台产品，开箱即用的高质量 Angular 组件。';
+      const descriptionContent = isEn ? enDescription : zhDescription;
+      this.meta.updateTag({
+        name: 'description',
+        content: descriptionContent
+      });
+      this.meta.updateTag({
+        name: 'twitter:description',
+        content: descriptionContent
+      });
+      this.meta.updateTag({
+        property: 'og:description',
+        content: descriptionContent
+      });
+      this.meta.updateTag({
+        property: 'og:locale',
+        content: isEn ? 'en_US' : 'zh_CN'
+      });
+      const doc = this.document as Document;
+      this.renderer.setAttribute(doc.documentElement, 'lang', isEn ? 'en' : 'zh-Hans');
+    }
+  }
+
   initDocsearch() {
     this.loadScript('https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js').then(() => {
       this.docsearch = docsearch({
-        appId         : 'BH4D9OD16A',
-        apiKey        : '9f7d9d6527ff52ec484e90bb1f256971',
-        indexName     : 'ng_zorro',
-        inputSelector : '#search-box input',
-        algoliaOptions: { hitsPerPage: 5, facetFilters: [ `tags:${this.language}` ] },
+        appId: 'BH4D9OD16A',
+        apiKey: '9f7d9d6527ff52ec484e90bb1f256971',
+        indexName: 'ng_zorro',
+        inputSelector: '#search-box input',
+        algoliaOptions: { hitsPerPage: 5, facetFilters: [`tags:${this.language}`] },
         transformData(hits: any) {
           // tslint:disable-line:no-any
           hits.forEach((hit: any) => {
@@ -172,12 +206,12 @@ export class AppComponent implements OnInit, AfterViewInit {
           });
           return hits;
         },
-        debug         : false
+        debug: false
       });
     });
   }
 
-  @HostListener('document:keyup.s', [ '$event' ])
+  @HostListener('document:keyup.s', ['$event'])
   onKeyUp(event: KeyboardEvent) {
     if (this.useDocsearch && this.searchInput && this.searchInput.nativeElement && event.target === document.body) {
       this.searchInput.nativeElement.focus();
@@ -189,13 +223,13 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   initColor() {
     if (!this.platform.isBrowser) {
-      return
+      return;
     }
     const node = document.createElement('link');
     node.rel = 'stylesheet/less';
     node.type = 'text/css';
     node.href = '/assets/color.less';
-    document.getElementsByTagName('head')[ 0 ].appendChild(node);
+    document.getElementsByTagName('head')[0].appendChild(node);
   }
 
   lessLoaded = false;
@@ -206,14 +240,14 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     const changeColor = () => {
       (window as any).less
-      .modifyVars({
-        '@primary-color': res.color.hex
-      })
-      .then(() => {
-        this.msg.success(`应用成功`);
-        this.color = res.color.hex;
-        window.scrollTo(0, 0);
-      });
+        .modifyVars({
+          '@primary-color': res.color.hex
+        })
+        .then(() => {
+          this.msg.success(`应用成功`);
+          this.color = res.color.hex;
+          window.scrollTo(0, 0);
+        });
     };
 
     const lessUrl = 'https://cdnjs.cloudflare.com/ajax/libs/less.js/2.7.2/less.min.js';
@@ -249,17 +283,17 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     this.ngZone.runOutsideAngular(() => {
       fromEvent(window, 'resize')
-      .pipe(
-        startWith(true),
-        debounceTime(50),
-        map(() => window.innerWidth)
-      )
-      .subscribe(width => {
-        const showDrawer = width <= 995;
-        if (this.showDrawer !== showDrawer) {
-          this.showDrawer = showDrawer;
-        }
-      });
+        .pipe(
+          startWith(true),
+          debounceTime(50),
+          map(() => window.innerWidth)
+        )
+        .subscribe(width => {
+          const showDrawer = width <= 995;
+          if (this.showDrawer !== showDrawer) {
+            this.showDrawer = showDrawer;
+          }
+        });
     });
   }
 
@@ -272,7 +306,7 @@ export class AppComponent implements OnInit, AfterViewInit {
     const hasLanguage = pathname.match(/(en|zh)(\/?)$/);
     if (language === 'zh-cn' && !hasLanguage) {
       this.nzI18nService.setLocale(zh_CN);
-      this.router.navigate([ 'docs', 'introduce', 'zh' ]);
+      this.router.navigate(['docs', 'introduce', 'zh']);
     }
   }
 }

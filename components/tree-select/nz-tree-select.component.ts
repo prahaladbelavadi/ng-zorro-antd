@@ -9,12 +9,12 @@
 import { BACKSPACE } from '@angular/cdk/keycodes';
 import { CdkConnectedOverlay, CdkOverlayOrigin, ConnectedOverlayPositionChange } from '@angular/cdk/overlay';
 import {
-  forwardRef,
   ChangeDetectorRef,
   Component,
   ContentChild,
   ElementRef,
   EventEmitter,
+  forwardRef,
   Host,
   Injector,
   Input,
@@ -35,11 +35,8 @@ import { merge, of as observableOf, Subscription } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
 import {
-  isNotNil,
-  slideMotion,
-  warnDeprecation,
-  zoomMotion,
   InputBoolean,
+  isNotNil,
   NzConfigService,
   NzFormatEmitEvent,
   NzNoAnimationDirective,
@@ -49,7 +46,9 @@ import {
   NzTreeHigherOrderServiceToken,
   NzTreeNode,
   NzTreeNodeOptions,
-  WithConfig
+  slideMotion,
+  WithConfig,
+  zoomMotion
 } from 'ng-zorro-antd/core';
 import { NzTreeComponent } from 'ng-zorro-antd/tree';
 
@@ -60,6 +59,7 @@ export function higherOrderServiceFactory(injector: Injector): NzTreeBaseService
 }
 
 const NZ_CONFIG_COMPONENT_NAME = 'treeSelect';
+const TREE_SELECT_DEFAULT_CLASS = 'ant-select-dropdown ant-select-tree-dropdown';
 
 @Component({
   selector: 'nz-tree-select',
@@ -123,18 +123,7 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
   @Input() @WithConfig(NZ_CONFIG_COMPONENT_NAME, 'default') nzSize: NzSizeLDSType;
   @Input() nzPlaceHolder = '';
   @Input() nzDropdownStyle: { [key: string]: string };
-  /**
-   * @deprecated 9.0.0 - use `nzExpandedKeys` instead.
-   */
-  @Input()
-  set nzDefaultExpandedKeys(value: string[]) {
-    warnDeprecation(`'nzDefaultExpandedKeys' would be removed in 9.0.0. Please use 'nzExpandedKeys' instead.`);
-    this.expandedKeys = value;
-  }
-  get nzDefaultExpandedKeys(): string[] {
-    return this.expandedKeys;
-  }
-
+  @Input() nzDropdownClassName: string;
   @Input()
   set nzExpandedKeys(value: string[]) {
     this.expandedKeys = value;
@@ -164,6 +153,7 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
     return this.nzTreeTemplate || this.nzTreeTemplateChild;
   }
 
+  dropdownClassName = TREE_SELECT_DEFAULT_CLASS;
   triggerWidth: number;
   isComposing = false;
   isDestroy = true;
@@ -240,8 +230,13 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.hasOwnProperty('nzNodes')) {
+    const { nzNodes, nzDropdownClassName } = changes;
+    if (nzNodes) {
       this.updateSelectedNodes(true);
+    }
+    if (nzDropdownClassName) {
+      const className = this.nzDropdownClassName && this.nzDropdownClassName.trim();
+      this.dropdownClassName = className ? `${TREE_SELECT_DEFAULT_CLASS} ${className}` : TREE_SELECT_DEFAULT_CLASS;
     }
   }
 
@@ -426,11 +421,7 @@ export class NzTreeSelectComponent extends NzTreeBase implements ControlValueAcc
   updateInputWidth(): void {
     if (this.isMultiple && this.inputElement) {
       if (this.inputValue || this.isComposing) {
-        this.renderer.setStyle(
-          this.inputElement.nativeElement,
-          'width',
-          `${this.inputElement.nativeElement.scrollWidth}px`
-        );
+        this.renderer.setStyle(this.inputElement.nativeElement, 'width', `${this.inputElement.nativeElement.scrollWidth}px`);
       } else {
         this.renderer.removeStyle(this.inputElement.nativeElement, 'width');
       }

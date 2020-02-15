@@ -12,10 +12,6 @@ A long list can be divided into several pages by `Pagination`, and only one page
 - When it will take a long time to load/render all items.
 - If you want to browse the data by navigating through pages.
 
-## Import this Component Individually
-
-You can get more detail [here](/docs/getting-started/en#import-a-component-individually).
-
 ```ts
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 ```
@@ -39,7 +35,7 @@ import { NzPaginationModule } from 'ng-zorro-antd/pagination';
 | `[nzSimple]` | whether to use simple mode | `boolean` | - |
 | `[nzSize]` | specify the size of `nz-pagination`, can be set to `small` | `'small'` | `'default'` |
 | `[nzPageSizeOptions]` | specify the sizeChanger options | `number[]` | `[10, 20, 30, 40]` |
-| `[nzItemRender]` | to customize item | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next', page: number }>` | - |
+| `[nzItemRender]` | to customize item | `TemplateRef<{ $implicit: 'page' \| 'prev' \| 'next'\| 'prev_5'\| 'next_5', page: number }>` | - |
 | `[nzShowTotal]` | to display the total number and range | `TemplateRef<{ $implicit: number, range: [ number, number ] }>` | - |
 | `[nzHideOnSinglePage]` | Whether to hide pager on single page | `boolean` | `false` |
 | `(nzPageIndexChange)` | current page number change callback | `EventEmitter<number>` | - |

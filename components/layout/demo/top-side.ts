@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <nz-layout>
       <nz-header>
         <div class="logo"></div>
-        <ul nz-menu [nzTheme]="'dark'" [nzMode]="'horizontal'" class="header-menu">
+        <ul nz-menu nzTheme="dark" nzMode="horizontal" class="header-menu">
           <li nz-menu-item>nav 1</li>
           <li nz-menu-item nzSelected>nav 2</li>
           <li nz-menu-item>nav 3</li>
@@ -49,7 +49,7 @@ import { Component } from '@angular/core';
           </nz-sider>
           <nz-content class="inner-content">Content</nz-content>
         </nz-layout>
-        <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
+        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
       </nz-content>
     </nz-layout>
   `,

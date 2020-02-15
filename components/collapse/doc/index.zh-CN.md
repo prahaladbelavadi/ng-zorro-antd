@@ -13,10 +13,6 @@ cols: 1
 - 对复杂区域进行分组和隐藏，保持页面的整洁。
 - `手风琴` 是一种特殊的折叠面板，只允许单个内容区域展开。
 
-## 单独引入此组件
-
-想要了解更多关于单独引入组件的内容，可以在[快速上手](/docs/getting-started/zh#单独引入某个组件)页面进行查看。
-
 ```ts
 import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 ```
@@ -29,6 +25,7 @@ import { NzCollapseModule } from 'ng-zorro-antd/collapse';
 | --- | --- | --- | --- | --- |
 | `[nzAccordion]` | 是否每次只打开一个tab | `boolean` | `false` | ✅ |
 | `[nzBordered]` | 是否有边框 | `boolean` | `true` | ✅ |
+| `[nzExpandIconPosition]` | 设置图标位置 | `'left' \| 'right'` | `left` | - |
 
 ### nz-collapse-panel
 

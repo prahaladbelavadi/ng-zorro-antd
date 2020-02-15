@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'nz-demo-layout-fixed-sider',
   template: `
-    <nz-layout class="left-layout">
+    <nz-layout class="layout">
       <nz-sider>
         <div class="logo"></div>
         <ul nz-menu nzTheme="dark" nzMode="inline">
@@ -50,16 +50,14 @@ import { Component } from '@angular/core';
             Really
             <br />...<br />...<br />...<br />
             long
-            <br />...<br />...<br />...<br />...<br />...<br />...
-            <br />...<br />...<br />...<br />...<br />...<br />...
-            <br />...<br />...<br />...<br />...<br />...<br />...
-            <br />...<br />...<br />...<br />...<br />...<br />...
-            <br />...<br />...<br />...<br />...<br />...<br />...
-            <br />...<br />...<br />...<br />...<br />...<br />... <br />...<br />...<br />...<br />...<br />...<br />
+            <br />...<br />...<br />...<br />...<br />...<br />... <br />...<br />...<br />...<br />...<br />...<br />...
+            <br />...<br />...<br />...<br />...<br />...<br />... <br />...<br />...<br />...<br />...<br />...<br />...
+            <br />...<br />...<br />...<br />...<br />...<br />... <br />...<br />...<br />...<br />...<br />...<br />...
+            <br />...<br />...<br />...<br />...<br />...<br />
             content
           </div>
         </nz-content>
-        <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
+        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
       </nz-layout>
     </nz-layout>
   `,
@@ -71,8 +69,8 @@ import { Component } from '@angular/core';
         margin: 16px;
       }
 
-      .left-layout {
-        height: 100vh;
+      .layout {
+        min-height: 100vh;
       }
 
       nz-sider {

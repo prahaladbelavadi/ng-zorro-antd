@@ -4,8 +4,8 @@ import { By } from '@angular/platform-browser';
 
 import { NzIconTestModule } from 'ng-zorro-antd/icon/testing';
 
-import { NzDividerComponent } from './nz-divider.component';
-import { NzDividerModule } from './nz-divider.module';
+import { NzDividerComponent } from './divider.component';
+import { NzDividerModule } from './divider.module';
 
 describe('divider', () => {
   let fixture: ComponentFixture<TestDividerComponent>;
@@ -43,7 +43,10 @@ describe('divider', () => {
   });
 
   describe('#nzText', () => {
-    for (const item of [{ text: 'with text', ret: true }, { text: undefined, ret: false }]) {
+    for (const item of [
+      { text: 'with text', ret: true },
+      { text: undefined, ret: false }
+    ]) {
       it(`[${item.text}]`, () => {
         context.nzText = item.text;
         fixture.detectChanges();
@@ -72,13 +75,7 @@ describe('divider', () => {
 
 @Component({
   template: `
-    <nz-divider
-      #comp
-      [nzDashed]="nzDashed"
-      [nzType]="nzType"
-      [nzText]="nzText"
-      [nzOrientation]="nzOrientation"
-    ></nz-divider>
+    <nz-divider #comp [nzDashed]="nzDashed" [nzType]="nzType" [nzText]="nzText" [nzOrientation]="nzOrientation"></nz-divider>
   `
 })
 class TestDividerComponent {

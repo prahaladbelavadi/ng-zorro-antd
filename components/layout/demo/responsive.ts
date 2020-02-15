@@ -4,15 +4,9 @@ import { Component } from '@angular/core';
   selector: 'nz-demo-layout-responsive',
   template: `
     <nz-layout class="layout">
-      <nz-sider
-        nzCollapsible
-        [(nzCollapsed)]="isCollapsed"
-        [nzBreakpoint]="'lg'"
-        [nzCollapsedWidth]="0"
-        [nzZeroTrigger]="zeroTrigger"
-      >
+      <nz-sider nzCollapsible nzBreakpoint="lg" [nzCollapsedWidth]="0">
         <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <ul nz-menu nzTheme="dark" nzMode="inline">
           <li nz-menu-item>
             <i nz-icon nzType="user"></i>
             <span>nav 1</span>
@@ -38,17 +32,14 @@ import { Component } from '@angular/core';
             Content
           </div>
         </nz-content>
-        <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
+        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
       </nz-layout>
     </nz-layout>
-    <ng-template #zeroTrigger>
-      <i nz-icon nzType="menu-fold" nzTheme="outline"></i>
-    </ng-template>
   `,
   styles: [
     `
       .layout {
-        height: 100vh;
+        min-height: 100vh;
       }
 
       .logo {
@@ -78,6 +69,4 @@ import { Component } from '@angular/core';
     `
   ]
 })
-export class NzDemoLayoutResponsiveComponent {
-  isCollapsed = false;
-}
+export class NzDemoLayoutResponsiveComponent {}

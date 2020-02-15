@@ -6,8 +6,9 @@
  * found in the LICENSE file at https://github.com/NG-ZORRO/ng-zorro-antd/blob/master/LICENSE
  */
 
-export * from './addon/public-api';
+export * from './outlet/public-api';
 export * from './animation/public-api';
+export * from './transition-patch/public-api';
 export * from './no-animation/public-api';
 export * from './overlay/public-api';
 export * from './time/public-api';
@@ -19,7 +20,6 @@ export * from './tree/public-api';
 export * from './types/public-api';
 export * from './util/public-api';
 export * from './wave/public-api';
-export * from './dropdown/public-api';
 export * from './logger/public-api';
 export * from './responsive/public-api';
 export * from './trans-button/public-api';

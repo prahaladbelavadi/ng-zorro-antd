@@ -10,10 +10,6 @@ A dropdown list.
 
 If there are too many operations to display, you can wrap them in a `Dropdown`. By clicking/hovering on the trigger, a dropdown menu should appear, which allows you to choose one option and execute relevant actions.
 
-## Import this Component Individually
-
-You can get more detail [here](/docs/getting-started/en#import-a-component-individually).
-
 ```ts
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 ```
@@ -62,5 +58,5 @@ Create dropdown with contextmenu, the detail can be found in the example above
 
 | Property | Description | Arguments | Return Value |
 | --- | --- | --- | --- |
-| create | create dropdown | `($event:MouseEvent, menu:NzDropdownMenuComponent)` | - |
+| create | create dropdown | `($event:MouseEvent | {x:number, y:number}, menu:NzDropdownMenuComponent)` | - |
 | close | close dropdown | - | - |

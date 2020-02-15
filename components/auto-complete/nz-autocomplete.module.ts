@@ -11,7 +11,7 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { NzAddOnModule, NzNoAnimationModule } from 'ng-zorro-antd/core';
+import { NzNoAnimationModule, NzOutletModule } from 'ng-zorro-antd/core';
 
 import { NzAutocompleteOptgroupComponent } from './nz-autocomplete-optgroup.component';
 import { NzAutocompleteOptionComponent } from './nz-autocomplete-option.component';
@@ -19,18 +19,8 @@ import { NzAutocompleteTriggerDirective } from './nz-autocomplete-trigger.direct
 import { NzAutocompleteComponent } from './nz-autocomplete.component';
 
 @NgModule({
-  declarations: [
-    NzAutocompleteComponent,
-    NzAutocompleteOptionComponent,
-    NzAutocompleteTriggerDirective,
-    NzAutocompleteOptgroupComponent
-  ],
-  exports: [
-    NzAutocompleteComponent,
-    NzAutocompleteOptionComponent,
-    NzAutocompleteTriggerDirective,
-    NzAutocompleteOptgroupComponent
-  ],
-  imports: [CommonModule, OverlayModule, FormsModule, NzAddOnModule, NzNoAnimationModule]
+  declarations: [NzAutocompleteComponent, NzAutocompleteOptionComponent, NzAutocompleteTriggerDirective, NzAutocompleteOptgroupComponent],
+  exports: [NzAutocompleteComponent, NzAutocompleteOptionComponent, NzAutocompleteTriggerDirective, NzAutocompleteOptgroupComponent],
+  imports: [CommonModule, OverlayModule, FormsModule, NzOutletModule, NzNoAnimationModule]
 })
 export class NzAutocompleteModule {}

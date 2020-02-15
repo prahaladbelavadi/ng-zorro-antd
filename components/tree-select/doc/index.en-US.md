@@ -11,10 +11,6 @@ Tree selection control.
 `TreeSelect` is similar to `Select`, but the values are provided in a tree like structure.
 Any data whose entries are defined in a hierarchical manner is fit to use this control. Examples of such case may include a corporate hierarchy, a directory structure, and so on.
 
-## Import this Component Individually
-
-You can get more detail [here](/docs/getting-started/en#import-a-component-individually).
-
 ```ts
 import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 ```
@@ -33,6 +29,7 @@ import { NzTreeSelectModule } from 'ng-zorro-antd/tree-select';
 | `[nzNotFoundContent]` | Specify content to show when no result matches. | `string` | - |
 | `[nzDropdownMatchSelectWidth]` | Determine whether the dropdown menu and the select input are the same width | `boolean` | `true` | ✅ |
 | `[nzDropdownStyle]` | To set the style of the dropdown menu | `object` | - |
+| `[nzDropdownClassName]` | classname of dropdown menu | `string` | - |
 | `[nzMultiple]` | Support multiple or not, will be `true` when enable `nzCheckable`. | `boolean` | `false` |
 | `[nzHideUnMatched]` | Hide unmatched nodes while searching | `boolean` | `false` | ✅ |
 | `[nzSize]` | To set the size of the select input | `'large' \| 'small' \| 'default'` | `'default'` | ✅ |

@@ -6,7 +6,7 @@ import { Component } from '@angular/core';
     <nz-layout>
       <nz-sider nzCollapsible [(nzCollapsed)]="isCollapsed" [nzTrigger]="null">
         <div class="logo"></div>
-        <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
+        <ul nz-menu nzTheme="dark" nzMode="inline">
           <li nz-submenu nzTitle="User" nzIcon="user">
             <ul>
               <li nz-menu-item>Tom</li>
@@ -28,12 +28,7 @@ import { Component } from '@angular/core';
       </nz-sider>
       <nz-layout>
         <nz-header>
-          <i
-            class="trigger"
-            nz-icon
-            [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'"
-            (click)="isCollapsed = !isCollapsed"
-          ></i>
+          <i class="trigger" nz-icon [nzType]="isCollapsed ? 'menu-unfold' : 'menu-fold'" (click)="isCollapsed = !isCollapsed"></i>
         </nz-header>
         <nz-content>
           <nz-breadcrumb>
@@ -44,7 +39,7 @@ import { Component } from '@angular/core';
             Bill is a cat.
           </div>
         </nz-content>
-        <nz-footer>Ant Design ©2019 Implement By Angular</nz-footer>
+        <nz-footer>Ant Design ©2020 Implement By Angular</nz-footer>
       </nz-layout>
     </nz-layout>
   `,
