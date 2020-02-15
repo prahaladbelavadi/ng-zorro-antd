@@ -11,5 +11,5 @@ title:
 
 ## en-US
 
-`nzTooltipTitle` accept the type of `TemplateRef<void>`
+`nzTooltipTitle` accepts the type of `TemplateRef<void>`
 
